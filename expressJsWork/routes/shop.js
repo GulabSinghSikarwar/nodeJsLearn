@@ -7,7 +7,8 @@ const router=express.Router();
 
 router.get( '/',(req,resp,next)=>{
 
-    resp.sendFile(path.join(__dirname,"../","views","shops.html"));
+    // resp.sendFile(path.join(__dirname,"../","views","shops.html"));
+    resp.render('shops',{title:'Shop'})
 
     console.log("in other middleware ");
 

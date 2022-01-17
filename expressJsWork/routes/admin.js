@@ -7,7 +7,9 @@ const router =express.Router();
 
 
 router.get('/add-products',(req,resp,next)=>{
-    resp.sendFile(path.join(__dirname,"../","views","add-products.html"))
+    // resp.sendFile(path.join(__dirname,"../","views","add-products.html"))
+    resp.render('add-products',{title:'Add Products'})
+    
 
 
 
@@ -21,7 +23,7 @@ router.get('/add-products',(req,resp,next)=>{
 
 router.post('/add-products',(req,resp,next)=>{
   
-    console.log(req.body);
+    console.log( " hello :  ", req.body.title);
     resp.redirect('/');
     
 

@@ -1,0 +1,14 @@
+<%-include('includes/head.ejs')%>
+
+    <body>
+
+
+
+        <%-include('includes/navBar.ejs')%>
+            <main>
+                <form action="/admin/add-products" method="POST">
+                    <input name="title" type="text">
+                    <button type="submit"> Submit</button>
+                </form>
+            </main>
+            <%-include('includes/end.ejs')%>
