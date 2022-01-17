@@ -8,6 +8,8 @@ const router=express.Router();
 router.get( '/',(req,resp,next)=>{
 
     // resp.sendFile(path.join(__dirname,"../","views","shops.html"));
+
+    //  now mvc 
     resp.render('shops',{title:'Shop'})
 
     console.log("in other middleware ");
