@@ -11,6 +11,17 @@
                     <li> Chemistry Pradeep </li>
                     <li> SL Arrora </li>
                     <li> S Saloni </li>
+                    <%if(Products.length>0){%>
+                        <%for(let x in Products){%>
+                            <li> <%=Products[x].title%></li>
+
+                        <%}%>
+
+                    <%}else{%>
+                        <li>Array is blank</li>
+
+                    <%}%>
+                    
 
 
                 </ul>

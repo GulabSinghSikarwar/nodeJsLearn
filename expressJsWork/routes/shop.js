@@ -4,19 +4,9 @@ const express = require('express');
 
 const router=express.Router();
 
+const productControllers=require('../controllers/products')
 
-router.get( '/',(req,resp,next)=>{
-
-    // resp.sendFile(path.join(__dirname,"../","views","shops.html"));
-
-    //  now mvc 
-    resp.render('shops',{title:'Shop'})
-
-    console.log("in other middleware ");
-
-    // resp.send(" <h1> Hello from express </h1> ")
-    
-})
+router.get( '/',productControllers.getProducts)
 
 
 module.exports=router
