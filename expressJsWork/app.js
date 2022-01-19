@@ -23,6 +23,18 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 app.use('/admin', adminRouter);
 
+// for main home page 
+app.use(shopRouter)
+
+{
+    /*
+    app.use('/products',(req,resp)=>{
+    // resp.sendFile(path.join(__dirname,))
+    resp.render('shop/index.ejs',{title:' Products or Index', Products:[{title:'hello'}]})
+})
+    */
+}
+// for index page 
 app.use(shopRouter)
 
 app.use(PageNotFound.pageNotFound)

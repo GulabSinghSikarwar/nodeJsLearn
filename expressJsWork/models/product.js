@@ -74,7 +74,7 @@ module.exports=  class Product{
 
     //    })
         
-        return product;
+        // return product;
 
         
    }
