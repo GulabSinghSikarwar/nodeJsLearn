@@ -6,6 +6,10 @@ const router=express.Router();
 
 const productControllers=require('../controllers/products')
 
+
+
+
+
 router.get( '/',productControllers.getProducts)
 
 
@@ -19,5 +23,15 @@ router.get( '/',productControllers.getProducts)
     */
 }
 router.get('/products',productControllers.getIndexProducts)
+
+//  for Cart page 
+{
+    /*
+    router.get('/cart',(req,resp,next)=>{
+    resp.render('shop/cart.ejs',{title:'Cart'})
+})
+    */
+}
+router.get('/cart',productControllers.getCart)
 
 module.exports=router

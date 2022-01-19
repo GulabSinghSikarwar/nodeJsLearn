@@ -52,4 +52,8 @@ exports.getProducts = (req, resp, next) => {
 exports.getIndexProducts=(req,resp)=>{
     resp.render('shop/index.ejs',{title:"Index Products",Products:[{title:"Halo Physics"}]})
 }
+exports.getCart=(req,resp,next)=>{
+    resp.render('shop/cart.ejs',{title:"Cart  "})
+
+}
 

@@ -25,6 +25,7 @@ app.use('/admin', adminRouter);
 
 // for main home page 
 app.use(shopRouter)
+// for index page 
 
 {
     /*
@@ -34,9 +35,20 @@ app.use(shopRouter)
 })
     */
 }
-// for index page 
+
 app.use(shopRouter)
 
+// for cart Page 
+{
+    /*
+app.use('/cart',(req,resp,next)=>{
+    resp.render('shop/cart.ejs',{title:"Cart"})
+})
+    */
+}
+app.use(shopRouter)
+
+// for page Not 
 app.use(PageNotFound.pageNotFound)
 
 
