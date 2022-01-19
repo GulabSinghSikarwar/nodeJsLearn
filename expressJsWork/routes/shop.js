@@ -8,8 +8,16 @@ const productControllers=require('../controllers/products')
 
 router.get( '/',productControllers.getProducts)
 
-router.get('/products',(req,resp)=>{
+
+//for index products page  
+
+{
+    /*
+    router.get('/products',(req,resp)=>{
     resp.render('shop/index.ejs', {title:"Index Products",Products:[{title:"Halo"}]})
 })
+    */
+}
+router.get('/products',productControllers.getIndexProducts)
 
 module.exports=router
