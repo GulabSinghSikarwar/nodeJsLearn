@@ -28,7 +28,7 @@ exports.getProducts = (req, resp, next) => {
 exports.getIndexProducts=(req,resp)=>{
   
     Product.fetchProducts((products) => {
-        resp.render('shop/index.ejs',{title:"Index Products",Products:[{title:"Halo Physics"}]})
+        resp.render('shop/index.ejs',{title:"Index Products",Products:products})
 
 
 

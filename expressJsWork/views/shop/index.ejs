@@ -5,15 +5,21 @@
 
 
         <%-include('../includes/navBar.ejs')%>
-            <main>
+
+        
+            <main class="listHolder">
                 <h1> This Index Products Page </h1>
-                <ul>
-                    <li> Chemistry Pradeep </li>
-                    <li> SL Arrora </li>
-                    <li> S Saloni </li>
+                <ul class="ul" >
+               
                     <%if(Products.length>0){%>
                         <%for(let x in Products){%>
-                            <li> <%=Products[x].title%></li>
+                            <div class="card" style="width: 18rem;">
+                                <img src="https://rukminim1.flixcart.com/image/416/416/kuyf8nk0/computer/3/n/s/mk183hn-a-laptop-apple-original-imag7yzkbgbwvwq3.jpeg?q=70" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                  <p class="card-text"><%=Products[x].title%></p>
+                                </div>
+                              </div>
+                           
 
                         <%}%>
 
