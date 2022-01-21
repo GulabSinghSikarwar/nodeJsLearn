@@ -4,13 +4,13 @@ const express = require('express');
 
 const router=express.Router();
 
-const productControllers=require('../controllers/products')
+const shopControllers=require('../controllers/shop');
+
+const adminControllers=require('../controllers/admin')
 
 
 
 
-
-router.get( '/',productControllers.getProducts)
 
 
 //for index products page  
@@ -22,7 +22,7 @@ router.get( '/',productControllers.getProducts)
 })
     */
 }
-router.get('/products',productControllers.getIndexProducts)
+// router.get('/products',productControllers.getIndexProducts)
 
 //  for Cart page 
 {
@@ -32,6 +32,12 @@ router.get('/products',productControllers.getIndexProducts)
 })
     */
 }
-router.get('/cart',productControllers.getCart)
+
+router.get('/products',shopControllers.getProducts)
+router.get('/cart',shopControllers.getCart)
+
+
+router.get( '/',shopControllers.getIndexProducts)
+
 
 module.exports=router

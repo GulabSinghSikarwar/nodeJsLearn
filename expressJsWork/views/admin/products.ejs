@@ -1,0 +1,29 @@
+<%-include('../includes/head.ejs')%>
+
+    <body>
+
+
+
+        <%-include('../includes/navBar.ejs')%>
+            <main>
+                <h1> This Index Admin Products  Page </h1>
+                <ul>
+                    <li> Chemistry Pradeep </li>
+                    <li> SL Arrora </li>
+                    <li> S Saloni </li>
+                    <%if(Products.length>0){%>
+                        <%for(let x in Products){%>
+                            <li> <%=Products[x].title%></li>
+
+                        <%}%>
+
+                    <%}else{%>
+                        <li>Array is blank</li>
+
+                    <%}%>
+                    
+
+
+                </ul>
+            </main>
+            <%-include('../includes/end.ejs')%>
