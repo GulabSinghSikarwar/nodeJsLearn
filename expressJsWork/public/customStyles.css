@@ -1,0 +1,32 @@
+.ul {
+    max-width: 70%;
+    border: 1px solid maroon;
+    overflow-x: scroll;
+    display: grid;
+    grid-column-gap: 50px;
+    grid-row-gap: 50px;
+
+    grid-template-columns: auto auto auto;
+    padding: 50px;
+
+    margin-top: 50px;
+
+
+}
+
+.listHolder {
+
+    margin-top: 50px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+.pageHeading{
+    text-align: center;
+    /* justify-content: center; */
+    margin-top: 50px;
+
+}

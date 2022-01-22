@@ -6,9 +6,13 @@ var product =[];
 
 
 module.exports=  class Product{
-    constructor(title ){
+    constructor(title,price,imageUrl,description ){
         
         this.title=title;
+        this.price=price;
+        this.description=description;
+        this.imageUrl=imageUrl;
+        
        
 
     }

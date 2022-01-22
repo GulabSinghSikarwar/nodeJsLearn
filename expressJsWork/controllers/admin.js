@@ -2,11 +2,16 @@ const Product = require('../models/product')
 exports.postProduct = (req, resp, next) => {
 
     const title = req.body.title;
+    const price=req.body.price;
+    const imageUrl=req.body.imageUrl;
+    const description=req.body.description;
 
-    const product = new Product(title);
+
+    const product = new Product(title,price,imageUrl,description);
     product.save();
 
-    console.log(" hello :  ", req.body.title);
+    console.log(" hello :  ", req.body.title, " price : ",price, " imageUrl : ",imageUrl ," description : ",description);
+    
     resp.redirect('/');
 
 
