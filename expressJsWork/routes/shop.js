@@ -1,12 +1,12 @@
-const path=require('path');
+const path = require('path');
 
 const express = require('express');
 
-const router=express.Router();
+const router = express.Router();
 
-const shopControllers=require('../controllers/shop');
+const shopControllers = require('../controllers/shop');
 
-const adminControllers=require('../controllers/admin')
+const adminControllers = require('../controllers/admin')
 
 
 
@@ -33,11 +33,13 @@ const adminControllers=require('../controllers/admin')
     */
 }
 
-router.get('/products',shopControllers.getProducts)
-router.get('/cart',shopControllers.getCart)
+router.get('/products/:productId', shopControllers.getProductDetails)
+router.get('/products', shopControllers.getProducts)
+router.get('/cart', shopControllers.getCart)
+router.get('/cart', shopControllers.getCart)
 
 
-router.get( '/',shopControllers.getIndexProducts)
+router.get('/', shopControllers.getIndexProducts)
 
 
-module.exports=router
+module.exports = router

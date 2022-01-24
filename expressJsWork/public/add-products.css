@@ -40,3 +40,7 @@ input:focus{
 button{
     justify-content: center;
 }
+.cardImage{
+
+    max-height: 300px;
+}

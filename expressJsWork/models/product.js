@@ -1,85 +1,93 @@
-const { error } = require('console');
-const fs=require('fs');
-const path=require('path')
+const { error } = require("console");
 
-var product =[];
+const fs = require("fs");
+const { dirname } = require("path");
+const path = require("path");
 
+var product = [];
 
-module.exports=  class Product{
-    constructor(title,price,imageUrl,description ){
-        
-        this.title=title;
-        this.price=price;
-        this.description=description;
-        this.imageUrl=imageUrl;
-        
-       
-
+module.exports = class Product {
+    constructor(title, price, imageUrl, description, id) {
+        this.title = title;
+        this.price = price;
+        this.description = description;
+        this.imageUrl = imageUrl;
+        this.id = id;
     }
-    save(){
-        
-      const p=path.join(
-          path.dirname(process.mainModule.filename),
-          'data',
-          'products.json'
+    save() {
+        const p = path.join(
+            path.dirname(process.mainModule.filename),
+            "data",
 
+            "products.json"
+        );
 
-      )
-
-        fs.readFile( p , (err,fileContent) =>
-          { 
+        fs.readFile(p, (err, fileContent) => {
             // console.log(err);
-            let  products=[];
+            let products = [];
 
             if (!err) {
                 console.log(fileContent);
-                products=JSON.parse(fileContent);
+                products = JSON.parse(fileContent);
             }
-
 
             products.push(this);
 
-            fs.writeFile(p, JSON.stringify(products),(error)=>{
-                console.log(error );
-            })
-
-
-        })
+            fs.writeFile(p, JSON.stringify(products), (error) => {
+                console.log(error);
+            });
+        });
     }
-    static fetchProducts(cb){
-
-        let p=path.join(
+    static fetchProducts(cb) {
+        let p = path.join(
             path.dirname(process.mainModule.filename),
-            'data',
-            'products.json'
-        )
-        fs.readFile(
-            p, ( err, fileContent )=>{
-                if (err) {
-                    cb([])
-                }
-                cb(JSON.parse(fileContent));
-
+            "data",
+            "products.json"
+        );
+        fs.readFile(p, (err, fileContent) => {
+            if (err) {
+                cb([]);
             }
-        )
+            cb(JSON.parse(fileContent));
+        });
 
-    //     let p=path.join(path.dirname(process.mainModule.filename),'data','products.json')
-    //    fs.readFile(p,(err,data)=>{
-    //        if (err) {
-    //            cb([])
-    //        }
-    //     //    
-    //         else if (data.length===0) {
-    //             console.log(data.length);
-    //         cb([])   
-    //        }
+        {
+            /*
+                             let p=path.join(path.dirname(process.mainModule.filename),'data','products.json')
+                        fs.readFile(p,(err,data)=>{
+                            if (err) {
+                                cb([])
+                            }
+                         //    
+                             else if (data.length===0) {
+                                 console.log(data.length);
+                             cb([])   
+                            }
+                 
+                           else { cb(JSON.parse(data))}
+                 
+                        })
+                         
+                         return product;
+                        */
+        }
+    }
+    static getDetails(id, cb) {
+        let products = [];
 
-    //       else { cb(JSON.parse(data))}
-
-    //    })
-        
-        // return product;
-
-        
-   }
-}
+        const p = path.join(
+            path.dirname(process.mainModule.filename),
+            "data",
+            "products.json"
+        );
+        fs.readFile(p, (err, fileContent) => {
+            if (err) {
+                return cb({});
+            } else {
+                products = JSON.parse(fileContent);
+                let productDetails = products.find((element) => element.id === id);
+                cb(productDetails);
+            }
+        });
+    }
+};

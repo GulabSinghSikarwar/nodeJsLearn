@@ -5,17 +5,19 @@ exports.postProduct = (req, resp, next) => {
     const price=req.body.price;
     const imageUrl=req.body.imageUrl;
     const description=req.body.description;
+    const id=Math.random().toString(); 
 
 
-    const product = new Product(title,price,imageUrl,description);
+
+    const product = new Product(title,price,imageUrl,description ,id);
     product.save();
 
     console.log(" hello :  ", req.body.title, " price : ",price, " imageUrl : ",imageUrl ," description : ",description);
-    
+
     resp.redirect('/');
 
 
-
+    
 }
 
 exports.getAddProduct = (req, resp, next) => {
