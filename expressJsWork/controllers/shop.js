@@ -1,4 +1,5 @@
 const Product = require('../models/product')
+const Cart = require('../models/cart.js');
 
 
 
@@ -69,4 +70,26 @@ exports.getProductDetails = (req, resp, next) => {
 
 
     })
+}
+exports.postCart = (req, resp, next) => {
+    console.log("Req body : ", req.body);
+    let price = req.body.price;
+    let id = req.body.id;
+
+    price = parseFloat(price);
+    id = parseFloat(id)
+    console.log(" new price : ", price);
+    console.log(" new id : ", id);
+
+
+
+
+
+    Cart.addToCart(id, price, () => {
+        resp.redirect('/cart');
+    });
+
+
+
+
 }

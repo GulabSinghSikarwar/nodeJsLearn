@@ -10,8 +10,10 @@
     margin-top: 50px;
 }
 
-.card-body {
-    width: 400px;
+.custom-card-body {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
 }
 
 .custom-card {
@@ -37,6 +39,10 @@
     /* margin-right: 100px; */
 }
 
+.btn-container {
+    display: flex;
+}
+
 .product-details-cart-button-one:hover {
     border: none;
     background-color: #2827CC;
@@ -58,13 +64,17 @@
 }
 
 .btn {
-    background-color: #120E43;
-    color: white;
+    /* background-color: #120E43;
+    color: white; */
     border-radius: 5px;
     font-weight: 500;
+    transition: all 0.5s ease-in-out;
+    background-color: white;
+    color: #120E43;
+    border: #120E43 solid 2px;
 }
 
 .btn:hover {
-    background-color: #2827CC;
+    background-color: #120E43;
     color: white;
 }

@@ -37,6 +37,8 @@ router.get('/products/:productId', shopControllers.getProductDetails)
 router.get('/products', shopControllers.getProducts)
 router.get('/cart', shopControllers.getCart)
 router.get('/cart', shopControllers.getCart)
+router.post('/cart', shopControllers.postCart)
+
 
 
 router.get('/', shopControllers.getIndexProducts)

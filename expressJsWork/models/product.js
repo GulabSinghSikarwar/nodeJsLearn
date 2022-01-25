@@ -90,4 +90,33 @@ module.exports = class Product {
             }
         });
     }
+    static getProductFromId(id, cb) {
+        let products = [];
+        let p = path.join(path.dirname(process.mainModule.filename),
+            "data",
+            "products.json"
+        )
+        fs.readFile(p, (err, fileContent) => {
+            if (err) {
+                products = [];
+
+
+            } else {
+                products = JSON.parse(fileContent);
+                console.log(" checking  all prod ", products);
+                const required = products.find((ele) => {
+                    return ele.id === id
+
+                })
+                console.log('====================================');
+                console.log(" required : ", required);
+                console.log('====================================');
+                cb(required)
+
+            }
+
+        })
+
+
+    }
 };
