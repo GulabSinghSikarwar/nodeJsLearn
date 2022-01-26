@@ -1,66 +1,57 @@
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
         <%=title%>
     </title>
-    <link rel="stylesheet" href="/bootstrap.css">
-    <link rel="stylesheet" href="/bootstrap.css">
-    <link rel="stylesheet" href="/customStyles.css">
-    <link rel="stylesheet" href="/product-form.css">
+    <link rel="stylesheet" href="/bootstrap.css" />
+    <link rel="stylesheet" href="/bootstrap.css" />
+    <link rel="stylesheet" href="/customStyles.css" />
+    <link rel="stylesheet" href="/product-form.css" />
 
     <body>
-
         <%-include('../includes/navBar.ejs')%>
 
-
-            <h1 class="pageHeading">Admin can
-                <%if(edit){%>
-                    Edit
-
-                    <%} else{%>
-                        Add
-
-                        <%}%>
-                            products </h1>
+            <h1 class="pageHeading">
+                Admin can
+                <%if(edit){%> Edit
+                    <%} else{%> Add
+                        <%}%> products
+            </h1>
 
             <div class="form-Container">
                 <main class="form-main-container">
                     <form action="<% if(edit){%>/admin/edit-product<%}else{%>/admin/add-products<%}%>" method="POST">
-                        <div class="form-control title ">
+                        <div class="form-control title">
                             <label for="title">Enter Title </label>
-                            <input id="title" name="title" value="<%if(edit){%><%=product.title.trim()%><%}%>" type="text" required>
-
+                            <input id="title" name="title" value="<%if(edit){%><%=product.title.trim()%><%}%>" type="text" required />
                         </div>
-                        <div class="form-control title ">
+                        <div class="form-control title">
                             <label for="price">Enter Price </label>
-                            <input id="price" value="<%if(edit){%><%=product.price%><%}%>" name="price" type="number" step="0.001" required>
-
+                            <input id="price" value="<%if(edit){%><%=product.price%><%}%>" name="price" type="number" step="0.001" required />
                         </div>
-                        <div class="form-control title ">
+                        <div class="form-control title">
                             <label for="imageUrl">Enter ImageUrl </label>
-                            <input id="imageUrl" value="<%if(edit){%><%=product.imageUrl%><%}%>" name="imageUrl" type="text" required>
-
+                            <input id="imageUrl" value="<%if(edit){%><%=product.imageUrl%><%}%>" name="imageUrl" type="text" required />
                         </div>
                         <%if(edit){%>
                             <div>
-                                <input type="hidden" name="id" value="<%=product.id%>">
+                                <input type="hidden" name="id" value="<%=product.id%>" />
                             </div>
 
                             <%}%>
-                                <div class="form-control title ">
+                                <div class="form-control title">
                                     <label for="description">Enter description </label>
-                                    <textarea id="description" value="<%if(edit){%><%=product.description%><%}%>" name="description" type="memo" required>
-                               </textarea>
-
+                                    <input id="description" type="text" value="<%if(edit){%><%=product.description%><%}%>" name="description" required />
                                 </div>
 
-                                <div class="form-control-button ">
-                                    <button type="submit"> Submit</button>
-
+                                <div class="form-control-button">
+                                    <button type="submit">Submit</button>
                                 </div>
                     </form>
                 </main>
             </div>
             <%-include('../includes/end.ejs')%>
+    </body>
+</head>

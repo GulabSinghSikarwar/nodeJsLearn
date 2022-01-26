@@ -1,4 +1,6 @@
 const { error } = require("console");
+const Cart = require('./cart')
+
 
 const fs = require("fs");
 const { dirname } = require("path");
@@ -15,28 +17,65 @@ module.exports = class Product {
         this.id = id;
     }
     save() {
-        const p = path.join(
-            path.dirname(process.mainModule.filename),
-            "data",
 
-            "products.json"
-        );
+        //  if the current id is not  null i.e ( threre is some exsisiting id ) then only we will create the new product 
+        if (this.id) {
+            const p = path.join(path.dirname(process.mainModule.filename),
+                'data',
+                'products.json'
+            )
 
-        fs.readFile(p, (err, fileContent) => {
-            // console.log(err);
-            let products = [];
+            fs.readFile(p, (err, fileContent) => {
+                let products = [];
 
-            if (!err) {
-                console.log(fileContent);
-                products = JSON.parse(fileContent);
-            }
 
-            products.push(this);
+                if (err) {
+                    console.log(err);
 
-            fs.writeFile(p, JSON.stringify(products), (error) => {
-                console.log(error);
+                } else {
+                    products = JSON.parse(fileContent)
+                }
+                const exsistingFileIndex = products.findIndex((element) => {
+                    return this.id === element.id
+                })
+                products[exsistingFileIndex] = this;
+                fs.writeFile(p, JSON.stringify(products), (writingError) => {
+                    console.log("Error inside Writing file  for exsisting Product :: ", writingError);
+                })
+
+
+            })
+
+
+        }
+        //  product is  created for the first time  
+        else {
+            this.id = (Math.random() * 10000000000000000).toString();
+
+
+            const p = path.join(
+                path.dirname(process.mainModule.filename),
+                "data",
+
+                "products.json"
+            );
+
+            fs.readFile(p, (err, fileContent) => {
+                // console.log(err);
+                let products = [];
+
+                if (!err) {
+                    console.log(fileContent);
+                    products = JSON.parse(fileContent);
+                }
+
+                products.push(this);
+
+                fs.writeFile(p, JSON.stringify(products), (error) => {
+                    console.log(error);
+                });
             });
-        });
+        }
     }
     static fetchProducts(cb) {
         let p = path.join(
@@ -116,5 +155,46 @@ module.exports = class Product {
         })
 
 
+    }
+    static deleteProductWithId(id, cb) {
+        const p = path.join(path.dirname(process.mainModule.filename),
+            'data',
+            'products.json'
+        )
+
+        let products = [];
+
+        fs.readFile(p, (error, fileContent) => {
+
+            if (!error) {
+                products = JSON.parse(fileContent);
+
+            } else {
+                console.log("Error while reading File and deleting it :: ", error);
+            }
+            let prod = products.find((element) => {
+                return element.id === id
+
+            });
+            const price = prod.price;
+
+
+            Cart.deleteProductFromCartWithId(id, price);
+
+
+            const updatedProducts = products.filter((element) => {
+
+                return element.id !== id
+            })
+            fs.writeFile(p, JSON.stringify(updatedProducts), (err) => {
+                if (err) {
+                    console.log("Error while deleting  writing the products ,,which is result we get after  deleting  the element ::->", err);
+                } else {
+                    cb()
+
+                }
+
+            })
+        })
     }
 };

@@ -1,6 +1,7 @@
 const path = require('path')
 const fs = require('fs');
 const { dirname } = require('path');
+const { error } = require('console');
 
 
 module.exports = class Cart {
@@ -80,6 +81,73 @@ module.exports = class Cart {
 
 
         })
+
+    }
+    static deleteProductFromCartWithId(id, price) {
+        console.log("cart delete call");
+        const p = path.join(path.dirname(process.mainModule.filename),
+            'data',
+            'cart.json')
+        fs.readFile(p, (err, fileContent) => {
+            if (err) {
+                // either file is blank
+                console.log(err);
+
+            } else {
+                console.log(" price : ", price, " Id : ", id);
+                let cart = {}
+                let product = [];
+
+                cart = {...JSON.parse(fileContent) }
+                    // console.log("cart : ", cart);
+
+                product = [...cart.products];
+                // console.log(product);
+                id = parseFloat(id)
+
+                let prodIndex = product.findIndex((ele) => {
+                    return ele.id === id
+                })
+                console.log("prodIndex : ", prodIndex);
+
+                if (prodIndex === (-1)) {
+                    console.log("Product is not in the cart");
+                } else {
+                    const exsistingProd = product[prodIndex];
+                    console.log("exsisting product", exsistingProd);
+                    const updatedProducts = product.filter((prod) => {
+                        return prod.id !== id
+                    })
+                    const updatedTotalPrice = cart.totalPrice - price;
+                    const UpdatedCart = {
+                        products: updatedProducts,
+                        totalPrice: updatedTotalPrice
+                    }
+                    console.log(" updated Cart ", UpdatedCart);
+                    fs.writeFile(p, JSON.stringify(UpdatedCart), (error) => {
+                        if (error) {
+                            console.log(" Error while writing updated cart");
+                        } else {
+                            console.log(" Successfully  Product Deleted from cart");
+                        }
+                    })
+
+                }
+
+
+
+
+
+
+
+            }
+
+
+        })
+
+
+
+
 
     }
 }
