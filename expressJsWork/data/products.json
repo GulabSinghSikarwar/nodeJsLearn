@@ -1,15 +1,1 @@
-[{
-        "title": "pradeep chemistry",
-        "price": "12.99",
-        "description": "Chemistry book ",
-        "imageUrl": "https://images-na.ssl-images-amazon.com/images/I/51nTLE++5+S._SX258_BO1,204,203,200_.jpg",
-        "id": "7922266592162146"
-    },
-    {
-        "title": "MacBook Pro",
-        "price": "1200.56",
-        "description": "Amazing PC ",
-        "imageUrl": "https://rukminim1.flixcart.com/image/416/416/kuyf8nk0/computer/3/n/s/mk183hn-a-laptop-apple-original-imag7yzkbgbwvwq3.jpeg?q=70",
-        "id": "1374949140245840.2"
-    }
-]
+[{"title":"pradeep chemistry","price":"12.99","description":"Chemistry book ","imageUrl":"https://images-na.ssl-images-amazon.com/images/I/51nTLE++5+S._SX258_BO1,204,203,200_.jpg","id":"7922266592162146"},{"title":"MacBook Pro","price":"1200.56","description":"Amazing PC ","imageUrl":"https://rukminim1.flixcart.com/image/416/416/kuyf8nk0/computer/3/n/s/mk183hn-a-laptop-apple-original-imag7yzkbgbwvwq3.jpeg?q=70","id":"1374949140245840.2"},{"title":"pradeep chemistry","price":"12.99","description":"                               ","imageUrl":"https://images-na.ssl-images-amazon.com/images/I/51nTLE++5+S._SX258_BO1,204,203,200_.jpg","id":"3711724868312993.5"},{"title":"pradeep chemistry","price":"12.99","description":"                               ","imageUrl":"https://images-na.ssl-images-amazon.com/images/I/51nTLE++5+S._SX258_BO1,204,203,200_.jpg","id":"9007742629392140"}]

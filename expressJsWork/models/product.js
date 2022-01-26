@@ -103,14 +103,12 @@ module.exports = class Product {
 
             } else {
                 products = JSON.parse(fileContent);
-                console.log(" checking  all prod ", products);
+                // console.log(" checking  all prod ", products);
                 const required = products.find((ele) => {
                     return ele.id === id
 
                 })
-                console.log('====================================');
-                console.log(" required : ", required);
-                console.log('====================================');
+
                 cb(required)
 
             }

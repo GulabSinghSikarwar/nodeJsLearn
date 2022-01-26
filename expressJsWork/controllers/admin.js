@@ -36,10 +36,10 @@ exports.getEditProducts = (req, resp, next) => {
     let edit = Boolean(req.query.edit);
     let prodId = (req.params.productId);
     let prodId2 = parseFloat(prodId)
-    console.log(" prodId 1 : ", typeof(prodId), " prodId 2 : ", typeof(prodId2));
+        // console.log(" prodId 1 : ", typeof(prodId), " prodId 2 : ", typeof(prodId2));
 
-    console.log(" Edit Query : ", edit);
-    console.log(" Product ID  : ", prodId);
+    // console.log(" Edit Query : ", edit);
+    // console.log(" Product ID  : ", prodId);
     if (!edit) {
         resp.redirect('/')
 
@@ -48,7 +48,7 @@ exports.getEditProducts = (req, resp, next) => {
 
         Product.getProductFromId(prodId, (product) => {
             // const len = Object.keys(details).length;
-            console.log("inside control Prod : ", product);
+            // console.log("inside control Prod : ", product);
             resp.render('admin/edit-product', { title: 'edit Products ', product: product, edit: edit })
 
 
@@ -68,4 +68,9 @@ exports.getAdminProducts = (req, resp, next) => {
 
 
     })
+}
+exports.PostEditProduct = (req, resp, next) => {
+    console.log("Post Edit Product", req.body);
+    resp.redirect('/')
+
 }

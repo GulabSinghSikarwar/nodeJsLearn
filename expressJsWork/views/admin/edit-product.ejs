@@ -1,4 +1,14 @@
-<%-include('../includes/head.ejs')%>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%=title%>
+    </title>
+    <link rel="stylesheet" href="/bootstrap.css">
+    <link rel="stylesheet" href="/bootstrap.css">
+    <link rel="stylesheet" href="/customStyles.css">
+    <link rel="stylesheet" href="/product-form.css">
 
     <body>
 
@@ -17,7 +27,7 @@
 
             <div class="form-Container">
                 <main class="form-main-container">
-                    <form action="/admin/add-products" method="POST">
+                    <form action="<% if(edit){%>/admin/edit-product<%}else{%>/admin/add-products<%}%>" method="POST">
                         <div class="form-control title ">
                             <label for="title">Enter Title </label>
                             <input id="title" name="title" value="<%if(edit){%><%=product.title.trim()%><%}%>" type="text" required>
@@ -33,16 +43,23 @@
                             <input id="imageUrl" value="<%if(edit){%><%=product.imageUrl%><%}%>" name="imageUrl" type="text" required>
 
                         </div>
-                        <div class="form-control title ">
-                            <label for="description">Enter description </label>
-                            <textarea id="description" value="<%if(edit){%><%=product.description%><%}%>" name="description" type="memo" required>
+                        <%if(edit){%>
+                            <div>
+                                <input type="hidden" name="id" value="<%=product.id%>">
+                            </div>
+
+                            <%}%>
+                                <div class="form-control title ">
+                                    <label for="description">Enter description </label>
+                                    <textarea id="description" value="<%if(edit){%><%=product.description%><%}%>" name="description" type="memo" required>
                                </textarea>
 
-                        </div>
-                        <div class="form-control-button ">
-                            <button type="submit"> Submit</button>
+                                </div>
 
-                        </div>
+                                <div class="form-control-button ">
+                                    <button type="submit"> Submit</button>
+
+                                </div>
                     </form>
                 </main>
             </div>
