@@ -1,4 +1,6 @@
-const { error } = require("console");
+{
+    /*
+    const { error } = require("console");
 const Cart = require('./cart')
 
 
@@ -91,110 +93,250 @@ module.exports = class Product {
         });
 
         {
-            /*
-                             let p=path.join(path.dirname(process.mainModule.filename),'data','products.json')
-                        fs.readFile(p,(err,data)=>{
+           
+                        }
+                    }
+                    static getDetails(id, cb) {
+                        let products = [];
+                
+                        const p = path.join(
+                            path.dirname(process.mainModule.filename),
+                            "data",
+                            "products.json"
+                        );
+                        fs.readFile(p, (err, fileContent) => {
                             if (err) {
-                                cb([])
+                                return cb({});
+                            } else {
+                                products = JSON.parse(fileContent);
+                                let productDetails = products.find((element) => element.id === id);
+                                cb(productDetails);
                             }
-                         //    
-                             else if (data.length===0) {
-                                 console.log(data.length);
-                             cb([])   
+                        });
+                    }
+                    static getProductFromId(id, cb) {
+                        let products = [];
+                        let p = path.join(path.dirname(process.mainModule.filename),
+                            "data",
+                            "products.json"
+                        )
+                        fs.readFile(p, (err, fileContent) => {
+                            if (err) {
+                                products = [];
+                
+                
+                            } else {
+                                products = JSON.parse(fileContent);
+                                // console.log(" checking  all prod ", products);
+                                const required = products.find((ele) => {
+                                    return ele.id === id
+                
+                                })
+                
+                                cb(required)
+                
                             }
-                 
-                           else { cb(JSON.parse(data))}
-                 
+                
                         })
-                         
-                         return product;
-                        */
-        }
+                
+                
+                    }
+                    static deleteProductWithId(id, cb) {
+                        const p = path.join(path.dirname(process.mainModule.filename),
+                            'data',
+                            'products.json'
+                        )
+                
+                        let products = [];
+                
+                        fs.readFile(p, (error, fileContent) => {
+                
+                            if (!error) {
+                                products = JSON.parse(fileContent);
+                
+                            } else {
+                                console.log("Error while reading File and deleting it :: ", error);
+                            }
+                            let prod = products.find((element) => {
+                                return element.id === id
+                
+                            });
+                            const price = prod.price;
+                
+                
+                            Cart.deleteProductFromCartWithId(id, price);
+                
+                
+                            const updatedProducts = products.filter((element) => {
+                
+                                return element.id !== id
+                            })
+                            fs.writeFile(p, JSON.stringify(updatedProducts), (err) => {
+                                if (err) {
+                                    console.log("Error while deleting  writing the products ,,which is result we get after  deleting  the element ::->", err);
+                                } else {
+                                    cb()
+                
+                                }
+                
+                            })
+                        })
+                    }
+                    static getProductFromIdForCart(productsInCart, totalPrice, cb) {
+                        let products = [];
+                        let p = path.join(path.dirname(process.mainModule.filename),
+                            "data",
+                            "products.json"
+                        )
+                        console.log("products in Cart :: ", productsInCart);
+                
+                        let CartProducts = [];
+                
+                        fs.readFile(p, (err, fileContent) => {
+                            if (err) {
+                                console.log("error occured while getting cart details ");
+                                cb();
+                            } else {
+                                products = [...JSON.parse(fileContent)];
+                                console.log(" all Prod :: ", products);
+                
+                
+                                for (const prod in productsInCart) {
+                
+                                    let currentProd = productsInCart[prod];
+                
+                                    const prodId = currentProd.id;
+                                    console.log("current prod  : : ", currentProd, " prodId : ", prodId);
+                
+                                    const req = products.find((ele) => parseFloat(ele.id) === prodId);
+                                    console.log("found : : ", req);
+                                    CartProducts.push(req)
+                
+                
+                                }
+                                console.log("ALL DETAILS OF CART PROD :: ", CartProducts);
+                                cb(CartProducts, totalPrice);
+                
+                
+                
+                            }
+                        })
+                
+                
+                    }
+                };
+    */
+}
+const MongoDb = require("mongodb");
+const mongodb = require("mongodb");
+const getDB = require("../utils/database").getDB;
+
+module.exports = class Product {
+    constructor(title, price, imageUrl, discription) {
+        this.title = title;
+        this.price = price;
+        this.imageUrl = imageUrl;
+        this.discription = discription;
     }
-    static getDetails(id, cb) {
-        let products = [];
-
-        const p = path.join(
-            path.dirname(process.mainModule.filename),
-            "data",
-            "products.json"
-        );
-        fs.readFile(p, (err, fileContent) => {
-            if (err) {
-                return cb({});
-            } else {
-                products = JSON.parse(fileContent);
-                let productDetails = products.find((element) => element.id === id);
-                cb(productDetails);
-            }
-        });
-    }
-    static getProductFromId(id, cb) {
-        let products = [];
-        let p = path.join(path.dirname(process.mainModule.filename),
-            "data",
-            "products.json"
-        )
-        fs.readFile(p, (err, fileContent) => {
-            if (err) {
-                products = [];
-
-
-            } else {
-                products = JSON.parse(fileContent);
-                // console.log(" checking  all prod ", products);
-                const required = products.find((ele) => {
-                    return ele.id === id
-
-                })
-
-                cb(required)
-
-            }
-
-        })
-
-
-    }
-    static deleteProductWithId(id, cb) {
-        const p = path.join(path.dirname(process.mainModule.filename),
-            'data',
-            'products.json'
-        )
-
-        let products = [];
-
-        fs.readFile(p, (error, fileContent) => {
-
-            if (!error) {
-                products = JSON.parse(fileContent);
-
-            } else {
-                console.log("Error while reading File and deleting it :: ", error);
-            }
-            let prod = products.find((element) => {
-                return element.id === id
-
+    save() {
+        // db.collections('products').insertOne(this).
+        const db = getDB();
+        return db
+            .collection("products")
+            .insertOne(this)
+            .then((result) => {
+                console.log(" RESULT : ", result);
+            })
+            .catch((err) => {
+                console.log("error : ", err);
             });
-            const price = prod.price;
-
-
-            Cart.deleteProductFromCartWithId(id, price);
-
-
-            const updatedProducts = products.filter((element) => {
-
-                return element.id !== id
+    }
+    static fetchAll() {
+        const db = getDB();
+        return db
+            .collection("products")
+            .find()
+            .toArray()
+            .then((prods) => {
+                // console.log(" Fetch All Products Result : ", prods);
+                return prods;
             })
-            fs.writeFile(p, JSON.stringify(updatedProducts), (err) => {
-                if (err) {
-                    console.log("Error while deleting  writing the products ,,which is result we get after  deleting  the element ::->", err);
-                } else {
-                    cb()
+            .catch((err) => {
+                console.log(err);
+            });
+    }
+    static fetchProductById(id) {
+        const db = getDB();
+        // console.log(" call");
+        // console.log(" Id for fetching ", id);
 
-                }
-
+        return db
+            .collection("products")
+            .find({ _id: new MongoDb.ObjectId(id) })
+            .next()
+            .then((prod) => {
+                console.log(" Products for cart :", prod);
+                return prod;
             })
-        })
+            .catch((err) => {
+                console.log("error  ---->: ", err);
+            });
+    }
+    static updateById(prodId, prod) {
+        const db = getDB();
+        console.log(" new prod : ", prod);
+        // const result = db.collection("products")
+        //     .updateOne({ _id: new MongoDb.ObjectId(prodId) }, { $set: prod });
+        // return result;
+        // return db.collection("products").updateOne({ _id: new MongoDb.ObjectId(prodId) }, {  { $set: prod } })
+        return db
+            .collection("products")
+            .updateOne({ _id: new MongoDb.ObjectId(prodId) }, { $set: prod })
+            .then((result) => {
+                console.log(" update Query result :  ", result);
+            })
+            .catch((err) => {
+                console.log("Quesry err :: ", err);
+            });
+    }
+    static deleteProductById(id) {
+        const prodId = new mongodb.ObjectId(id);
+        const db = getDB();
+        return db
+            .collection("products")
+            .deleteOne({ _id: prodId })
+            .then((result) => {
+                console.log("Delete Result : ", result);
+            })
+            .catch((err) => {
+                console.log("Delete Query Error : ", err);
+            });
+    }
+    static fetchCartProduct(cartItems, cb) {
+        const db = getDB();
+        return db
+            .collection("products")
+            .find()
+            .toArray()
+            .then((products) => {
+                let Reqproducts = [];
+                cartItems.forEach((element) => {
+
+
+                    let product = products.find((curr) => {
+                        return curr._id.toString() === element._id.toString();
+                    });
+                    Reqproducts.push(product);
+                    console.log(" req prod ", Reqproducts);
+                    cb(Reqproducts)
+
+                    return Reqproducts;
+
+
+                });
+            })
+            .catch((err) => {
+                console.log(" error while  fetching all products for cart ", err);
+            });
     }
 };

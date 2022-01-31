@@ -1,31 +1,61 @@
-const path = require('path');
+const path = require("path");
 
-const http = require('http');
+const http = require("http");
+const mongodb = require("mongodb");
+const MongoConnect = require("./utils/database").MongoConnect;
 
-const express = require('express');
+const express = require("express");
 
-const PageNotFound = require('./controllers/404Page')
+const PageNotFound = require("./controllers/404Page");
 
 const app = express();
+const sequelize = require("./utils/database");
+const Users = require("./models/Users");
+
+app.set("views", "views");
+app.set("view engine", "ejs");
+
+app.use(express.static(path.join(__dirname, "public")));
+
+const bodyParser = require("body-parser");
+
+const adminRouter = require("./routes/admin");
+const shopRouter = require("./routes/shop");
+
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use((req, resp, next) => {
+    // req.user
+    const id = '61f7ba82b169145d6a11b84d';
 
 
-app.set('views', 'views')
-app.set('view engine', 'ejs')
+    Users.findById(id)
+        .then((user) => {
+            // console.log(" User with given Id : ", user);
 
-app.use(express.static(path.join(__dirname, "public")))
+            // req.user = user;
+            let ourUser = new Users(user.username, user.email, user.cart, user._id);
 
-const bodyParser = require('body-parser')
 
-const adminRouter = require('./routes/admin')
-const shopRouter = require('./routes/shop')
+            req.user = ourUser;
+            console.log("our user ", ourUser);
 
-app.use(bodyParser.urlencoded({ extended: true }))
+            console.log(" new  Object req.user for ID  : ", req.user);
 
-app.use('/admin', adminRouter);
 
-// for main home page 
-app.use(shopRouter)
-// for index page 
+        })
+        .catch((err) => {
+            console.log(" finding single User  Error : ", err);
+        });
+
+    next();
+});
+
+app.use("/admin", adminRouter);
+
+// for main home page
+app.use(shopRouter);
+// for index page
 
 {
     /*
@@ -36,9 +66,10 @@ app.use(shopRouter)
     */
 }
 
-app.use(shopRouter)
 
-// for cart Page 
+
+// for cart Page
+
 {
     /*
 app.use('/cart',(req,resp,next)=>{
@@ -46,12 +77,28 @@ app.use('/cart',(req,resp,next)=>{
 })
     */
 }
-app.use(shopRouter)
-
-// for page Not 
-app.use(PageNotFound.pageNotFound)
 
 
-const server = http.createServer(app);
-server.listen(3000)
+// for page Not
+app.use(PageNotFound.pageNotFound);
 
+
+
+MongoConnect(() => {
+    Users.findInitialUser().then((users) => {
+
+
+            if (users.length > 0) {
+
+            } else {
+                const firstUser = new Users("Gulab", "test@test.com", null, null);
+                firstUser.save();
+            }
+        })
+        .catch((err) => {
+            console.log("Intial user Checking error : ", err);
+        });
+
+    app.listen("3000");
+});
+// app.listen(3000)

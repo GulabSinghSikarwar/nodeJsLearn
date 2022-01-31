@@ -1,6 +1,49 @@
 <%-include("../includes/head.ejs") %>
-<body>
-    <%-include( "../includes/navBar.ejs")%>
-    <h1> This Is Cart Page </h1>
 
-<%-include("../includes/end.ejs")%>
+    <body>
+        <%-include( "../includes/navBar.ejs")%>
+            <h1> This Is Cart Page </h1>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Id</th>
+                        <!-- <th scope="col"> Products Image</th>
+                        <th scope="col">Title</th> -->
+                        <th scope="col">Quantity</th>
+
+                        <!-- <th scope="col">Price</th>
+                        <th scope="col">Description</th> -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <% products.forEach(( element)=>{%>
+                        <!-- <tr>
+                            <th scope="row">
+                                <%= element._id %>
+                            </th>
+
+                            <td>
+                                <img src="<%=element.imageUrl %>" height="212px" width="350px" alt="">
+                            </td>
+
+                            <td>
+                                <%= element.title %>
+                            </td>
+                            <td>
+                                <%= element.quantity %>
+                            </td> -->
+                        <td>
+                            <b> <%=element._id%></b>
+                        </td>
+                        <td>
+                            <b> <%=element.quantity %></b>
+                        </td>
+                        </tr>
+
+
+                        <%})%>
+
+                </tbody>
+            </table>
+
+            <%-include("../includes/end.ejs")%>

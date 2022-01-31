@@ -37,13 +37,13 @@
                         </div>
                         <%if(edit){%>
                             <div>
-                                <input type="hidden" name="id" value="<%=product.id%>" />
+                                <input type="hidden" name="id" value="<%=product._id%>" />
                             </div>
 
                             <%}%>
                                 <div class="form-control title">
-                                    <label for="description">Enter description </label>
-                                    <input id="description" type="text" value="<%if(edit){%><%=product.description%><%}%>" name="description" required />
+                                    <label for="discription">Enter description </label>
+                                    <input id="discription" type="text" value="<%if(edit){%><%=product.discription%><%}%>" name="discription" required />
                                 </div>
 
                                 <div class="form-control-button">

@@ -1,19 +1,14 @@
-const path = require('path');
+const path = require("path");
 
-const express = require('express');
+const express = require("express");
 
 const router = express.Router();
 
-const shopControllers = require('../controllers/shop');
+const shopControllers = require("../controllers/shop");
 
-const adminControllers = require('../controllers/admin')
+const adminControllers = require("../controllers/admin");
 
-
-
-
-
-
-//for index products page  
+//for index products page
 
 {
     /*
@@ -24,7 +19,7 @@ const adminControllers = require('../controllers/admin')
 }
 // router.get('/products',productControllers.getIndexProducts)
 
-//  for Cart page 
+//  for Cart page
 {
     /*
     router.get('/cart',(req,resp,next)=>{
@@ -33,15 +28,11 @@ const adminControllers = require('../controllers/admin')
     */
 }
 
-router.get('/products/:productId', shopControllers.getProductDetails)
-router.get('/products', shopControllers.getProducts)
-router.get('/cart', shopControllers.getCart)
-router.get('/cart', shopControllers.getCart)
-router.post('/cart', shopControllers.postCart)
+router.get("/products/:productId", shopControllers.getProductDetails);
+router.get("/products", shopControllers.getProducts);
+router.get("/cart", shopControllers.getCart);
+router.post("/cart", shopControllers.postCart);
 
+router.get("/", shopControllers.getIndexProducts);
 
-
-router.get('/', shopControllers.getIndexProducts)
-
-
-module.exports = router
+module.exports = router;
