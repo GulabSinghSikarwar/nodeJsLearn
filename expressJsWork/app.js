@@ -41,6 +41,7 @@ app.use((req, resp, next) => {
             console.log("our user ", ourUser);
 
             console.log(" new  Object req.user for ID  : ", req.user);
+            next();
 
 
         })
@@ -48,7 +49,7 @@ app.use((req, resp, next) => {
             console.log(" finding single User  Error : ", err);
         });
 
-    next();
+
 });
 
 app.use("/admin", adminRouter);

@@ -95,24 +95,44 @@ exports.postCart = (req, resp, next) => {
 };
 
 exports.getCart = (req, resp, next) => {
-    Users.fetchAllCartItems().then((cartItems) => {
+    // Users.fetchAllCartItems().then((cartItems) => {
 
-        cartItems.forEach(element => {
+    //     cartItems.forEach(element => {
+    //         console.log(" element : ", element);
+
+
+    //     });
+    //     resp.render("shop/cart.ejs", {
+    //         title: "Cart  ",
+
+    //         products: cartItems,
+    //     });
+
+
+
+    // }).catch((err) => {
+    //     console.log("inside controller : fetching all cart items err :: ", err);
+
+    // })
+
+
+    console.log(" user ----->", req.user);
+    req.user.getCart().then((prods) => {
+
+        prods.forEach(element => {
             console.log(" element : ", element);
 
 
         });
+
+
         resp.render("shop/cart.ejs", {
             title: "Cart  ",
 
-            products: cartItems,
+            products: prods,
         });
-
-
-
     }).catch((err) => {
-        console.log("inside controller : fetching all cart items err :: ", err);
-
+        console.log(err);
     })
 
     // Cart.getProductInCart((products, totalPrice) => {
@@ -138,3 +158,15 @@ exports.getCart = (req, resp, next) => {
     //     );
     // });
 };
+exports.deleteCartItem = (req, resp, next) => {
+    let cartid = req.body.id;
+    let userId = req.user._id;
+
+    req.user.deleteCartItem(cartid, userId).then((result) => {
+        console.log(result);
+        resp.redirect('/cart')
+
+    }).catch((err) => { console.log(err); })
+
+
+}

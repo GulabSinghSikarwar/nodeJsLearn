@@ -34,5 +34,5 @@ router.get("/cart", shopControllers.getCart);
 router.post("/cart", shopControllers.postCart);
 
 router.get("/", shopControllers.getIndexProducts);
-
+router.post('/cart/:prodId', shopControllers.deleteCartItem)
 module.exports = router;

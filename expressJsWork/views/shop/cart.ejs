@@ -2,48 +2,61 @@
 
     <body>
         <%-include( "../includes/navBar.ejs")%>
-            <h1> This Is Cart Page </h1>
+            <h1>This Is Cart Page</h1>
             <table class="table">
                 <thead>
                     <tr>
                         <th scope="col">Id</th>
-                        <!-- <th scope="col"> Products Image</th>
-                        <th scope="col">Title</th> -->
+                        <th scope="col">Products Image</th>
+                        <th scope="col">Title</th>
                         <th scope="col">Quantity</th>
 
-                        <!-- <th scope="col">Price</th>
-                        <th scope="col">Description</th> -->
+                        <th scope="col">Price</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Actions</th>
+
                     </tr>
                 </thead>
                 <tbody>
                     <% products.forEach(( element)=>{%>
-                        <!-- <tr>
+                        <tr>
                             <th scope="row">
                                 <%= element._id %>
                             </th>
 
                             <td>
-                                <img src="<%=element.imageUrl %>" height="212px" width="350px" alt="">
+                                <img src="<%=element.imageUrl %>" height="212px" width="350px" alt="" />
                             </td>
 
                             <td>
                                 <%= element.title %>
                             </td>
                             <td>
-                                <%= element.quantity %>
-                            </td> -->
-                        <td>
-                            <b> <%=element._id%></b>
-                        </td>
-                        <td>
-                            <b> <%=element.quantity %></b>
-                        </td>
+                                <b> <%= element.quantity %></b>
+                            </td>
+                            <td>
+                                <b> <%=element.price%></b>
+                            </td>
+                            <td>
+                                <b> <%=element.discription %></b>
+                            </td>
+                            <td>
+
+                                <form action="/cart/<%=element._id%>" method="post">
+                                    <input type="hidden" value="<%=element._id%>" name="id">
+                                    <button type="submit" class="btn ">Delete</button>
+
+                                </form>
+                            </td>
                         </tr>
 
-
                         <%})%>
-
                 </tbody>
             </table>
+            <hr>
+            <center>
+                <a href="/orders" class="btn" style="margin-bottom: 200px;margin-top: 50px;"> Order Now </a>
+            </center>
 
             <%-include("../includes/end.ejs")%>
+    </body>

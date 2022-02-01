@@ -301,6 +301,7 @@ module.exports = class Product {
     }
     static deleteProductById(id) {
         const prodId = new mongodb.ObjectId(id);
+        // db.collection('User')
         const db = getDB();
         return db
             .collection("products")
@@ -312,31 +313,6 @@ module.exports = class Product {
                 console.log("Delete Query Error : ", err);
             });
     }
-    static fetchCartProduct(cartItems, cb) {
-        const db = getDB();
-        return db
-            .collection("products")
-            .find()
-            .toArray()
-            .then((products) => {
-                let Reqproducts = [];
-                cartItems.forEach((element) => {
 
 
-                    let product = products.find((curr) => {
-                        return curr._id.toString() === element._id.toString();
-                    });
-                    Reqproducts.push(product);
-                    console.log(" req prod ", Reqproducts);
-                    cb(Reqproducts)
-
-                    return Reqproducts;
-
-
-                });
-            })
-            .catch((err) => {
-                console.log(" error while  fetching all products for cart ", err);
-            });
-    }
 };
