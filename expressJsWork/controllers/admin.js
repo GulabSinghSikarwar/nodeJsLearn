@@ -1,6 +1,8 @@
 const mongodb = require("mongodb");
 const res = require("express/lib/response");
 const Product = require("../models/product");
+const { cookie } = require("express/lib/response");
+
 exports.postProduct = (req, resp, next) => {
     const title = req.body.title;
     const price = req.body.price;
@@ -25,6 +27,20 @@ exports.postProduct = (req, resp, next) => {
 };
 
 exports.getAddProduct = (req, resp, next) => {
+
+
+
+    // if (cookie) {
+    //         const loggedIn = cookie.trim().split('=')[1];
+    //         resp.render("Auth/login.ejs", { title: "login", isLoggedIn: loggedIn });
+    //     } else {
+    //         const loggedIn = false
+    //         resp.render("Auth/login.ejs", { title: "login", isLoggedIn: loggedIn });
+    //     }
+
+    // const cookie = req.get('Cookie');
+    // const loggedIn = cookie.trim().split('=')[1];
+
     {
         /*
                  resp.sendFile(path.join(__dirname,"../","views","add-products.html"))
@@ -32,40 +48,167 @@ exports.getAddProduct = (req, resp, next) => {
     
                 */
     }
-    resp.render("admin/edit-product", { title: "Add Products", edit: false });
+    // const cookie = req.get('Cookie');
+    // if (cookie) {
+    //     const loggedIn = cookie.trim().split('=')[1];
+
+    //     resp.render("admin/edit-product", { title: "Add Products", edit: false, isLoggedIn: loggedIn });
+
+
+    // } else {
+    //     resp.render("admin/edit-product", { title: "Add Products", edit: false, isLoggedIn: false });
+    // }
+    const cookie = req.get('Cookie');
+    if (req.session.isLoggedIn) {
+        const loggedIn = cookie.trim().split('=')[1];
+
+        resp.render("admin/edit-product", { title: "Add Products", edit: false, isLoggedIn: req.session.isLoggedIn });
+
+
+    } else {
+        resp.render("admin/edit-product", { title: "Add Products", edit: false, isLoggedIn: false });
+    }
+
+
+
 };
 exports.getEditProducts = (req, resp, next) => {
     let edit = Boolean(req.query.edit);
     let prodId = req.params.productId;
     let prodId2 = parseFloat(prodId);
+    const cookie = req.get('Cookie');
+    // if (cookie) {
+    //     const loggedIn = cookie.trim().split('=')[1];
 
-    Product.fetchProductById(prodId)
-        .then((prod) => {
-            console.log("Prod : ", prod);
-            resp.render("admin/edit-product", {
-                title: "edit Products ",
-                product: prod,
-                edit: edit,
+    //     Product.fetchProductById(prodId)
+    //         .then((prod) => {
+    //             console.log("Prod : ", prod);
+    //             resp.render("admin/edit-product", {
+    //                 title: "edit Products ",
+    //                 product: prod,
+    //                 edit: edit,
+    //                 isLoggedIn: loggedIn
+    //             });
+    //         })
+    //         .catch((err) => {
+    //             console.log("ERROR :: ", err);
+    //         });
+
+    // } else {
+
+    //     Product.fetchProductById(prodId)
+    //         .then((prod) => {
+    //             console.log("Prod : ", prod);
+    //             resp.render("admin/edit-product", {
+    //                 title: "edit Products ",
+    //                 product: prod,
+    //                 edit: edit,
+    //                 isLoggedIn: false
+    //             });
+    //         })
+    //         .catch((err) => {
+    //             console.log("ERROR :: ", err);
+    //         });
+
+    // }
+    if (req.session.isLoggedIn) {
+        const loggedIn = cookie.trim().split('=')[1];
+
+        Product.fetchProductById(prodId)
+            .then((prod) => {
+                console.log("Prod : ", prod);
+                resp.render("admin/edit-product", {
+                    title: "edit Products ",
+                    product: prod,
+                    edit: edit,
+                    isLoggedIn: req.session.isLoggedIn
+                });
+            })
+            .catch((err) => {
+                console.log("ERROR :: ", err);
             });
-        })
-        .catch((err) => {
-            console.log("ERROR :: ", err);
-        });
+
+    } else {
+
+        Product.fetchProductById(prodId)
+            .then((prod) => {
+                console.log("Prod : ", prod);
+                resp.render("admin/edit-product", {
+                    title: "edit Products ",
+                    product: prod,
+                    edit: edit,
+                    isLoggedIn: false
+                });
+            })
+            .catch((err) => {
+                console.log("ERROR :: ", err);
+            });
+
+    }
+
 
     // resp.render('admin/edit-product', { title: "Edit Product" })
 };
 exports.getAdminProducts = (req, resp, next) => {
     // resp.render('admin/products.ejs',{title:'Admin  Products'})
+    const cookie = req.get('Cookie');
 
-    Product.fetchAll().then((prods) => {
-        const len = prods.length;
+    // if (cookie) {
 
-        resp.render("admin/products.ejs", {
-            Products: prods,
-            title: "Admin Products",
-            len: len,
+    //     const loggedIn = cookie.trim().split('=')[1];
+
+
+    //     Product.fetchAll().then((prods) => {
+    //         const len = prods.length;
+
+    //         resp.render("admin/products.ejs", {
+    //             Products: prods,
+    //             title: "Admin Products",
+    //             len: len,
+    //             isLoggedIn: loggedIn
+    //         });
+    //     });
+
+    // } else {
+    //     Product.fetchAll().then((prods) => {
+    //         const len = prods.length;
+
+    //         resp.render("admin/products.ejs", {
+    //             Products: prods,
+    //             title: "Admin Products",
+    //             len: len,
+    //             isLoggedIn: false
+    //         });
+    //     });
+    // }
+    if (req.session.isLoggedIn) {
+
+        const loggedIn = cookie.trim().split('=')[1];
+
+
+        Product.fetchAll().then((prods) => {
+            const len = prods.length;
+
+            resp.render("admin/products.ejs", {
+                Products: prods,
+                title: "Admin Products",
+                len: len,
+                isLoggedIn: req.session.isLoggedIn
+            });
         });
-    });
+
+    } else {
+        Product.fetchAll().then((prods) => {
+            const len = prods.length;
+
+            resp.render("admin/products.ejs", {
+                Products: prods,
+                title: "Admin Products",
+                len: len,
+                isLoggedIn: false
+            });
+        });
+    }
 };
 exports.PostEditProduct = (req, resp, next) => {
     const product = req.body;

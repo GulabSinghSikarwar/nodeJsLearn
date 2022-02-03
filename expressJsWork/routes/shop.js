@@ -35,4 +35,7 @@ router.post("/cart", shopControllers.postCart);
 
 router.get("/", shopControllers.getIndexProducts);
 router.post('/cart/:prodId', shopControllers.deleteCartItem)
+router.post('/orders', shopControllers.PostplaceOrder)
+router.get('/orders', shopControllers.getOrders)
+
 module.exports = router;
