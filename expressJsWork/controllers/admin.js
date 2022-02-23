@@ -6,7 +6,12 @@ const { cookie } = require("express/lib/response");
 exports.postProduct = (req, resp, next) => {
     const title = req.body.title;
     const price = req.body.price;
-    const imageUrl = req.body.imageUrl;
+    // const imageUrl = req.body.imageUrl;
+   const image=req.file;
+   if(image)
+   {
+const imageUrl=image.path
+    console.log( " image ",imageUrl);
     const discription = req.body.discription.trim();
     const id = null;
     // console.log('====================================');
@@ -23,7 +28,7 @@ exports.postProduct = (req, resp, next) => {
         console.log("SuccesFully added");
     });
 
-    resp.redirect("/");
+    resp.redirect("/");}
 };
 
 exports.getAddProduct = (req, resp, next) => {

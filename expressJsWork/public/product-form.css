@@ -30,13 +30,6 @@ input {
     font-size: 15px;
 }
 
-textarea {
-    width: 400px;
-    margin-left: 30px;
-    padding: 10px;
-    font-size: 15px;
-}
-
 .form-control-button {
     padding: 20px 10px;
     margin-top: 20px;

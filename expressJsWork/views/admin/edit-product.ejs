@@ -1,23 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-        <%=title%>
-    </title>
-    <link rel="stylesheet" href="/bootstrap.css">
-    <link rel="stylesheet" href="/bootstrap.css">
-    <link rel="stylesheet" href="/customStyles.css">
-    <!-- <link rel="stylesheet" href="/navBar.css"> -->
-    <link rel="stylesheet" href="/product-form.css" />
-    <link rel="stylesheet" href="/navBar.css">
+<%-include('../includes/head.ejs')%>
 
     <body>
-        <%-include( "../includes/navBar.ejs")%>
-
+        <%-include('../includes/navBar.ejs')%>
             <h1 class="pageHeading">
                 Admin can
                 <%if(edit){%> Edit
@@ -27,7 +11,7 @@
 
             <div class="form-Container">
                 <main class="form-main-container">
-                    <form action="<% if(edit){%>/admin/edit-product<%}else{%>/admin/add-products<%}%>" method="POST">
+                    <form  enctype="multipart/form-data" action="<% if(edit){%>/admin/edit-product<%}else{%>/admin/add-products<%}%>" class="edit_form" method="POST">
                         <div class="form-control title">
                             <label for="title">Enter Title </label>
                             <input id="title" name="title" value="<%if(edit){%><%=product.title.trim()%><%}%>" type="text" required />
@@ -38,7 +22,7 @@
                         </div>
                         <div class="form-control title">
                             <label for="imageUrl">Enter ImageUrl </label>
-                            <input id="imageUrl" value="<%if(edit){%><%=product.imageUrl%><%}%>" name="imageUrl" type="text" required />
+                            <input id="imageUrl" value="<%if(edit){%><%=product.imageUrl%><%}%>" name="imageUrl" type="file" required />
                         </div>
                         <%if(edit){%>
                             <div>
@@ -51,12 +35,12 @@
                                     <input id="discription" type="text" value="<%if(edit){%><%=product.discription%><%}%>" name="discription" required />
                                 </div>
 
-                                <div class="form-control-button">
-                                    <button type="submit">Submit</button>
+                                <div class="form-control">
+                                    <button type="submit" class="form_button">Submit</button>
                                 </div>
                     </form>
                 </main>
             </div>
             <%-include('../includes/end.ejs')%>
     </body>
-</head>
+    </head>
