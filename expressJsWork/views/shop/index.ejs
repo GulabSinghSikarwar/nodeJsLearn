@@ -13,7 +13,7 @@
                     <%if(Products.length>0){%>
                         <%for(let x in Products){%>
                             <div class="card" style="width: 18rem">
-                                <img src="<%=Products [x].imageUrl%>" class="cardImage card-img-top" alt="<%=Products.imageUrl%>" />
+                                <img src="/<%=Products [x].imageUrl%>" class="cardImage card-img-top" alt="<%=Products.imageUrl%>" />
                                 <div class="card-body">
                                     <p class="card-text">
                                         <%=Products[x].title%>
@@ -32,16 +32,19 @@
 
                                 <div class=" custom-card-body">
                                     <a href="/products/<%=Products[x]._id%>" class="btn"> View Details </a>
-                                    <form action="/cart" method="POST">
+                                    <%if(isLoggedIn){%>
 
-                                        <input id="id" type="hidden" value="<%=Products[x]._id%>" name="id">
+                                        <form action="/cart" method="POST">
+
+                                            <input id="id" type="hidden" value="<%=Products[x]._id%>" name="id">
 
 
-                                        <input id="price" type="hidden" value="<%=Products[x].price%>" name="price">
+                                            <input id="price" type="hidden" value="<%=Products[x].price%>" name="price">
 
 
-                                        <button type="submit" class="btn">Add to cart</button>
-                                    </form>
+                                            <button type="submit" class="btn">Add to cart</button>
+                                        </form>
+                                        <%}%>
                                 </div>
                             </div>
 

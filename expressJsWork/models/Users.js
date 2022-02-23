@@ -2,11 +2,12 @@ const getDb = require("../utils/database").getDB;
 const mongodb = require("mongodb");
 
 module.exports = class Users {
-    constructor(username, email, cart, id) {
+    constructor(username, email, password, cart, id) {
         this.username = username;
         this.email = email;
         this.cart = cart;
         this._id = id;
+        this.password = password;
     }
     save() {
         const db = getDb();
@@ -123,6 +124,9 @@ module.exports = class Users {
         const db = getDb();
 
         const prods = [];
+        if (this.cart === null) {
+            return Promise.resolve([]);
+        }
 
         if (this.cart.items.length === 0) return Promise.resolve([]);
         else {
@@ -200,10 +204,11 @@ module.exports = class Users {
                 console.log(err);
             });
     }
-    static getOrders() {
+    getOrders(id) {
         const db = getDb();
-        return db.collection("orders")
-            .find()
+        return db
+            .collection("orders")
+            .find({ "user._id": new mongodb.ObjectId(id) })
             .toArray()
             .then((orders) => {
                 return orders;
