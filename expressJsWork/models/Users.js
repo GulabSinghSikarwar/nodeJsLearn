@@ -204,7 +204,7 @@ module.exports = class Users {
                 console.log(err);
             });
     }
-    getOrders(id) {
+    static getOrders(id) {
         const db = getDb();
         return db
             .collection("orders")

@@ -34,8 +34,7 @@ exports.postAuthLogin = (req, resp, next) => {
     req.isLoggedIn = true;
     const password = req.body.password;
 
-    // console.log("Login details : ", req.body);1
-    // .find({ _id: new mongodb.ObjectId("61f7ba82b169145d6a11b84d") })
+   
 
     const db = getdb();
     db.collection("Users")

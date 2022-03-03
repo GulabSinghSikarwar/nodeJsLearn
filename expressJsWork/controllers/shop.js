@@ -1,3 +1,7 @@
+
+const path=require('path')
+const fs=require('fs');
+
 const mongodb = require("mongodb");
 const Product = require("../models/product");
 const Users = require("../models/Users");
@@ -79,21 +83,44 @@ exports.getIndexProducts = (req, resp) => {
     console.log(" Inside index ");
     const cookie = req.get("Cookie");
 
-
+    // if (cookie) {
+    //     const loggedIn = cookie.trim().split("=")[1];
+    //     Product.fetchAll()
+    //         .then((prods) => {
+    //             console.log(" Fetch All Products  in index routes Result : ", prods);
+    //             resp.render("shop/index.ejs", {
+    //                 title: "Index Products",
+    //                 Products: prods,
+    //                 isLoggedIn: loggedIn,
+    //             });
+    //         })
+    //         .catch((err) => {
+    //             console.log("Error : ", err);
+    //         });
+    // } else {
+    //     Product.fetchAll()
+    //         .then((prods) => {
+    //             console.log(" Fetch All Products  in index routes Result : ", prods);
+    //             resp.render("shop/index.ejs", {
+    //                 title: "Index Products",
+    //                 Products: prods,
+    //                 isLoggedIn: false,
+    //             });
+    //         })
+    //         .catch((err) => {
+    //             console.log("Error : ", err);
+    //         });
+    // }
 
     if (req.session.isLoggedIn) {
         const loggedIn = cookie.trim().split("=")[1];
         Product.fetchAll()
             .then((prods) => {
-                // console.log(" Fetch All Products  in index routes Result : ", prods);
+                console.log(" Fetch All Products  in index routes Result : ", prods);
                 resp.render("shop/index.ejs", {
                     title: "Index Products",
                     Products: prods,
                     isLoggedIn: req.session.isLoggedIn,
-                    // c_token: req.csrfToken()
-
-
-
                 });
             })
             .catch((err) => {
@@ -102,14 +129,11 @@ exports.getIndexProducts = (req, resp) => {
     } else {
         Product.fetchAll()
             .then((prods) => {
-                // console.log(" Fetch All Products  in index routes Result : ", prods);
+                console.log(" Fetch All Products  in index routes Result : ", prods);
                 resp.render("shop/index.ejs", {
                     title: "Index Products",
                     Products: prods,
                     isLoggedIn: false,
-                    // c_token: req.csrfToken()
-
-
                 });
             })
             .catch((err) => {
@@ -117,7 +141,6 @@ exports.getIndexProducts = (req, resp) => {
             });
     }
 };
-
 
 exports.getProductDetails = (req, resp, next) => {
     const id = req.params.productId;
@@ -170,8 +193,6 @@ exports.getProductDetails = (req, resp, next) => {
                 len: len,
                 imageUrl: prod.imageUrl,
                 isLoggedIn: req.session.isLoggedIn,
-                // c_token: req.csrfToken()
-
             });
         });
     } else {
@@ -187,8 +208,6 @@ exports.getProductDetails = (req, resp, next) => {
                 len: len,
                 imageUrl: prod.imageUrl,
                 isLoggedIn: false,
-                c_token: req.csrfToken()
-
             });
         });
     }
@@ -265,13 +284,13 @@ exports.getCart = (req, resp, next) => {
     const cookie = req.get("Cookie");
 
     if (req.session.isLoggedIn) {
-        // const loggedIn = cookie.trim().split("=")[1];
-        console.log(" user hmm ----->", req.user);
+        const loggedIn = cookie.trim().split("=")[1];
+        console.log(" user ----->", req.user);
         req.user
             .getCart()
             .then((prods) => {
                 prods.forEach((element) => {
-                    // console.log(" element : ", element);
+                    console.log(" element : ", element);
                 });
 
                 resp.render("shop/cart.ejs", {
@@ -279,8 +298,6 @@ exports.getCart = (req, resp, next) => {
 
                     products: prods,
                     isLoggedIn: req.session.isLoggedIn,
-                    // c_token: req.csrfToken()
-
                 });
             })
             .catch((err) => {
@@ -300,8 +317,6 @@ exports.getCart = (req, resp, next) => {
 
                     products: prods,
                     isLoggedIn: false,
-                    c_token: req.csrfToken()
-
                 });
             })
             .catch((err) => {
@@ -323,6 +338,7 @@ exports.deleteCartItem = (req, resp, next) => {
             console.log(err);
         });
 };
+
 exports.PostplaceOrder = (req, resp, next) => {
     if (req.user.cart.items.length > 0) {
         req.user
@@ -373,7 +389,8 @@ exports.getOrders = (req, resp, next) => {
 
     if (req.session.isLoggedIn) {
         const loggedIn = cookie.trim().split("=")[1];
-        req.user.getOrders(req.user._id)
+         const id =req.session.user._id
+        Users.getOrders(id)
             .then((orders) => {
                 console.log(orders);
 
@@ -395,12 +412,33 @@ exports.getOrders = (req, resp, next) => {
                     title: "Orders ",
                     products: orders,
                     isLoggedIn: false,
-                    c_token: req.csrfToken()
-
                 });
-            })
+            })  
             .catch((err) => {
                 console.log(err);
             });
     }
 };
+exports.getOrderIvoice=(req,resp,next)=>{
+    const  orderId=req.params.orderId;
+
+    // const p=path.join('data','invoice',`${orderId}-invoice.pdf`)
+    const name='invoice.pdf'
+    const p=path.join('data','invoice',name)
+    fs.readFile( p, (err,data)=>{
+        if(err)
+        {
+            return next(err);
+
+        }
+        
+        resp.setHeader('Content-Type','application/pdf');
+        resp.setHeader('Content-Disposition','inline;filename="' + name+'"');
+        resp.send(data)
+    })
+    
+
+
+}
+
+
